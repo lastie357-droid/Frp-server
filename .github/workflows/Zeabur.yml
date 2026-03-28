@@ -1,23 +1,33 @@
-name: Build and Redeploy
+name: Build and Push to Docker Hub
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Build and push Docker image
-        run: |
-          docker build -t yourdockerhubuser/yourimage:latest .
-          docker push yourdockerhubuser/yourimage:latest
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Debug - List files
+        run: ls -la
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/frp:latest .
+
+      - name: Push to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/frp:latest
 
       - name: Trigger Zeabur Redeploy
         run: |
           curl -X POST https://gateway.zeabur.com/graphql \
             -H "Authorization: Bearer ${{ secrets.ZEABUR_API_KEY }}" \
             -H "Content-Type: application/json" \
-            -d '{
-              "query": "mutation { redeployService(serviceID: \"service-698e2c71eceac33904f6928b\") }"
-            }'
+            -d '{"query": "mutation { redeployService(serviceID: \"service-698e2c71eceac33904f6928b\") }"}'
