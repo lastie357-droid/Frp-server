@@ -27,7 +27,7 @@ jobs:
 
       - name: Trigger Zeabur Redeploy
         run: |
-          curl -X POST https://gateway.zeabur.com/graphql \
+          curl -X POST https://api.zeabur.com/graphql \
             -H "Authorization: Bearer ${{ secrets.ZEABUR_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"query": "mutation { redeployService(serviceID: \"service-698e2c71eceac33904f6928b\") }"}'
