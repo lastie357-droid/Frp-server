@@ -7,3 +7,5 @@ webServer.addr = "0.0.0.0"
 webServer.port = 7500
 webServer.user = "{{ .Envs.DASHBOARD_USER }}"
 webServer.password = "{{ .Envs.DASHBOARD_PASS }}"
+transport.maxPoolCount = 10
+transport.heartbeatTimeout = 90
