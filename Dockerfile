@@ -10,4 +10,4 @@ COPY frp/frps.toml /etc/frp/frps.toml
 
 EXPOSE 7000 7500 6000 5555
 
-CMD ["frps", "-c", "/etc/frp/frps.toml"]
+CMD ["sh", "-c", "sed -i 's|{{ .Envs.FRP_TOKEN }}|'\"$FRP_TOKEN\"'|g; s|{{ .Envs.DASHBOARD_USER }}|'\"$DASHBOARD_USER\"'|g; s|{{ .Envs.DASHBOARD_PASS }}|'\"$DASHBOARD_PASS\"'|g' /etc/frp/frps.toml && frps -c /etc/frp/frps.toml"]
