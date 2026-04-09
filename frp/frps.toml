@@ -1,11 +1,7 @@
+# frps.toml
 bindPort = 7000
+dashboardPort = 7500
+vhostHTTPPort = 7500
 
-auth.method = "token"
-auth.token = "{{ .Envs.FRP_TOKEN }}"
-
-webServer.addr = "0.0.0.0"
-webServer.port = 7500
-webServer.user = "{{ .Envs.DASHBOARD_USER }}"
-webServer.password = "{{ .Envs.DASHBOARD_PASS }}"
-transport.maxPoolCount = 10
-transport.heartbeatTimeout = 90
+# Enable websocket so frpc can connect via HTTPS domain
+transport.protocol = "websocket"
