@@ -2,6 +2,4 @@
 bindPort = 7000
 dashboardPort = 7500
 vhostHTTPPort = 7500
-
-# Enable websocket so frpc can connect via HTTPS domain
 transport.protocol = "websocket"
