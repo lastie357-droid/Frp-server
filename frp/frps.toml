@@ -1,5 +1,10 @@
-# frps.toml
 bindPort = 7000
-dashboardPort = 7500
-vhostHTTPPort = 7500
-transport.protocol = "websocket"
+bindAddr = "0.0.0.0"
+
+auth.method = "token"
+auth.token = "yourSecretToken"
+
+webServer.addr = "0.0.0.0"
+webServer.port = 7500
+webServer.user = "admin"
+webServer.password = "admin"
